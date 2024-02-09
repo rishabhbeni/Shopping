@@ -1,7 +1,17 @@
+using Shopping.API.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("ShoppingAPIClient" ,httpClient =>
+{
+    // httpClient.BaseAddress = new Uri("http://localhost:5000/");
+    httpClient.BaseAddress = new Uri(builder.Configuration["ShoppingAPIUrl"]);
+});
+
+// builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>());
 
 var app = builder.Build();
 

@@ -1,9 +1,31 @@
-﻿using Shopping.Client.Models;
+﻿using MongoDB.Driver;
+using Shopping.API.Models;
 
-public static class ProductContext
+public class ProductContext
 {
-    public static readonly List<Product> Products = new List<Product>
-        {
+
+    public ProductContext(IConfiguration configuration)
+    {
+        var client = new MongoClient(configuration["DatabaseSettings:ConnectionString"]);
+        var database = client.GetDatabase(configuration["DatabaseSettings:DatabaseName"]);
+
+        Products = database.GetCollection<Product>(configuration["DatabaseSettings:CollectionName"]);
+        SeedData(Products);
+    }
+
+    public IMongoCollection<Product> Products { get; }
+
+    public static void SeedData(IMongoCollection<Product> productCollection)
+    {
+        bool existProduct = productCollection.Find(p => true).Any();
+
+        if (!existProduct)
+            productCollection.InsertManyAsync(GetPreConfiguredProducts());
+    }
+        private static IEnumerable<Product> GetPreConfiguredProducts()
+    {
+        return new List<Product>()
+            {
             new Product()
                 {
                     Name = "IPhone X",
@@ -54,3 +76,4 @@ public static class ProductContext
                 }
         };
     }
+}
