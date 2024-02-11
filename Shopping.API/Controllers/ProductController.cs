@@ -10,7 +10,7 @@ namespace Shopping.API.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        private readonly HttpClient _httpClient;
+       // private readonly HttpClient _httpClient;
         private readonly ProductContext _context;
         private readonly ILogger<ProductController> _logger;
 
