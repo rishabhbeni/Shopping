@@ -76,6 +76,7 @@ stages:
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
+              namespace: default
               manifests: |
                 $(Pipeline.Workspace)/aks/shoppingapi.yml
               imagePullSecrets: |
