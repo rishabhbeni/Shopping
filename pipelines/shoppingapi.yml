@@ -5,7 +5,7 @@
 trigger:
     branches:
       include:
-      - main
+      - test
     paths:
       include:
       - Shopping/Shopping.API/*
