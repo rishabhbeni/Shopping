@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'ab1b44b2-6718-4e87-9da6-92fd0a96e0ff'
-  imageRepository: 'rishabhbenishopping'
+  imageRepository: 'shoppingapi'
   containerRegistry: 'shoppingacrb.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Shopping.API/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -35,6 +35,6 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        buildContext: $(build.SourceDirectory)/Shopping
+        buildContext: $(build.SourcesDirectory)/Shopping
         tags: |
           $(tag)
