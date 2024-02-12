@@ -8,8 +8,8 @@ trigger:
       - test
     paths:
       include:
-      - Shopping/Shopping.API/*
-      - aks/shoppingapi.yml
+      - Shopping/Shopping.Client/*
+      - aks/shoppingclient.yml
 
 resources:
 - repo: self
@@ -18,9 +18,9 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'dockerRegistryServiceConnection'
-  imageRepository: 'shoppingapi'
+  imageRepository: 'shoppingclient'
   containerRegistry: 'shoppingrb.azurecr.io'
-  dockerfilePath: 'Shopping.API/Dockerfile'
+  dockerfilePath: 'Shopping.Client/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'shoppingacr-auth'
 
@@ -76,8 +76,9 @@ stages:
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
+              namespace: default
               manifests: |
-                $(Pipeline.Workspace)/aks/shoppingapi.yml
+                $(Pipeline.Workspace)/aks/shoppingclient.yml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
